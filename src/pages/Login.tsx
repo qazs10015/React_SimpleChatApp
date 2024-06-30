@@ -1,11 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
 
 function Login() {
+
+
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = e.target
+        console.log(data);
+    }
     return (
         <>
-            <Link to={'home'}>go to Home</Link>
-            <div>Login</div>
+            <form onSubmit={submit}>
+                <input type='text' name='text' placeholder='UserName' />
+                <input type='email' name='email' placeholder='Email' />
+                <input type='password' name='password' placeholder='Password' />
+                <input type='password' name='password' placeholder='Confirm Password' />
+                <button type="submit">submit</button>
+            </form>
         </>
     )
 }
