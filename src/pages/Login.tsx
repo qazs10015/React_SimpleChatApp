@@ -4,7 +4,7 @@ function Login() {
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = e.target
+        const data = e.currentTarget.elements;
         console.log(data);
     }
     return (
