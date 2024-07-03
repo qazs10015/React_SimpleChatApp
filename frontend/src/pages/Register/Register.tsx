@@ -27,9 +27,9 @@ function Register() {
                 <input className={style.input} type='password' name='password' placeholder='Password' />
                 <input className={style.input} type='password' name='confirmPassword' placeholder='Confirm Password' />
                 <div className='text-center'>
-                    <button type="submit" className='p-2 rounded-md bg-[#393e96] text-white w-full hover:bg-[#4f58ff] transition ease-in-out duration-700'>Create Account</button>
+                    <button type="submit" className='p-2 rounded-md bg-primary text-white w-full hover:bg-[#4f58ff] transition ease-in-out duration-700'>Create Account</button>
                     <span className='text-white'>or</span>
-                    <button className='p-2 rounded-md bg-white text-[#393e96] w-full hover:bg-[#aa65f8] hover:text-white transition ease-in-out duration-700' onClick={() => redirect('/login')}>Login</button>
+                    <button className='p-2 rounded-md bg-white text-primary w-full hover:bg-secondary hover:text-white transition ease-in-out duration-700' onClick={() => redirect('/login')}>Login</button>
                 </div>
             </form>
 
