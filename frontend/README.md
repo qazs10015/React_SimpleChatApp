@@ -17,6 +17,29 @@ CHANGE **{YOUR PROJECT NAME}** TO REAL PROJECT NAME
 
 ### Form
 
-原生取資料的方式
+- 原生取資料的方式
+  
+  > 要注意每一個 name 都需要是 unique，否則會被覆蓋
 
-使用 reacthookform 取資料的方式
+```ts
+const submit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // get all element from form element
+        const formElements = e.currentTarget.elements;
+
+        // create object to store data
+        const formData: { [key: string]: string } = {};
+
+        // loop to pass the data from every element into formData object
+        for (let i = 0; i < formElements.length; i++) {
+            const input = formElements[i] as HTMLInputElement;
+            if (input.name && input.type !== 'button' && input.type !== 'submit') {
+                formData[input.name] = input.value;
+            }
+        }
+        console.log(formData);
+    }
+```
+
+- 使用 reacthookform 取資料的方式
