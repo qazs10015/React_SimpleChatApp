@@ -42,7 +42,7 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
     }
 ```
 
-- 使用 [reacthookform](https://www.react-hook-form.com/) 取資料的方式
+- 使用 [ReactHookForm](https://www.react-hook-form.com/) 取資料的方式
 
     `npm install react-hook-form`
   
@@ -91,4 +91,22 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
                     <input {...register('password')}  />
                     <input {...register('confirmPassword')}  />
                     </form>
+    ```
+
+    ReactHookForm 還有兩個很棒的功能 `watch` 和 `error`
+
+    ```ts
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues });
+    ```
+
+    `watch` 用於監視某個欄位的資料異動
+
+    ```ts
+    console.log(watch("example"));
+    ```
+
+    `error` 用於了解目前的 form 有無任何錯誤訊息
+
+    ```tsx
+     {errors.exampleRequired && <span>This field is required</span>}
     ```
