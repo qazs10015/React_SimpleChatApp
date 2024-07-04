@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-
+    const redirect = useNavigate();
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = e.currentTarget.elements;
@@ -14,7 +15,9 @@ function Login() {
                     <input type='email' name='email' placeholder='Email' />
                     <input type='password' name='password' placeholder='Password' />
                     <input type='password' name='password' placeholder='Confirm Password' />
-                    <button type="submit">Submit</button>
+                    <button type="submit" className='p-2 rounded-md bg-primary text-white w-full hover:bg-[#4f58ff] transition ease-in-out duration-700'>Login</button>
+                    <span className='text-white'>or</span>
+                    <button className='p-2 rounded-md bg-white text-primary w-full hover:bg-secondary hover:text-white transition ease-in-out duration-700' onClick={() => redirect('/register')}>Create Account</button>
                 </form>
             </div>
         </>

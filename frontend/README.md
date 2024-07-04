@@ -105,8 +105,30 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
     console.log(watch("example"));
     ```
 
-    `error` 用於了解目前的 form 有無任何錯誤訊息
+    `error` 用於了解目前的 form 有無任何錯誤訊息，具體的細節可以看 [Apply validation 章節](https://react-hook-form.com/get-started#Applyvalidation)
 
     ```tsx
      {errors.exampleRequired && <span>This field is required</span>}
+    ```
+
+    除了 ReactHookForm 本身提供的 error 可以查看錯誤訊息以外，也可以使用 [Zod](https://github.com/colinhacks/zod) 作為驗證的工具
+
+    需注意的是，如果使用 Zod 為驗證工具，還需要額外再安裝 [resolvers](https://github.com/react-hook-form/resolvers?tab=readme-ov-file#zod)
+
+    ```ts
+    // 定義 json object schema
+    const registerSchema = z.object({
+        text: z.string().min(1),
+        email: z.string().email('無效的 email 格式'),
+        password: z.string().min(6),
+        confirmPassword: z.string().min(6)
+    });
+
+    // 使用 json object schema 推論型別，讓程式碼可以更精簡更好讀
+    type RegisterProps = z.infer<typeof registerSchema>;
+
+    // 須加上 zodResolver 才可以正常運作
+    // resolver: zodResolver(registerSchema)
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterProps>({ defaultValues, resolver: zodResolver(registerSchema) });
+
     ```
