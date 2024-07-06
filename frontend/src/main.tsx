@@ -6,7 +6,7 @@ import './index.css'
 import { Router } from './router.tsx'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function fallbackRender({ error, resetErrorBoundary }) {
+function fallbackRender({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
 
   console.log('fromErrorBoundary', error);
@@ -23,7 +23,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <RouterProvider router={Router}>
       </RouterProvider>
-
-    </React.StrictMode>,
+    </React.StrictMode>
   </ErrorBoundary>
 )

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-[#535bf2]
+  @apply bg-[#535bf2] h-screen w-screen flex items-center justify-center;
 }
 
 /* :root {

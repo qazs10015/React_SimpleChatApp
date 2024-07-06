@@ -118,7 +118,7 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
     ```ts
     // 定義 json object schema
     const registerSchema = z.object({
-        text: z.string().min(1),
+        userName: z.string().min(1),
         email: z.string().email('無效的 email 格式'),
         password: z.string().min(6),
         confirmPassword: z.string().min(6)
@@ -130,5 +130,30 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
     // 須加上 zodResolver 才可以正常運作
     // resolver: zodResolver(registerSchema)
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterProps>({ defaultValues, resolver: zodResolver(registerSchema) });
+
+    ```
+
+    實作驗證功能過程中，發現 `ReactHookForm` 在操作資料時都是以 `string` 的方式儲存，要解決這個問題需要再加上 `setValueAs`，範例程式使用的 parseInt(v,10)，可以是任意轉為數字的函式，簡單來說就是需要把字串轉乘數字使用，直接使用 `Number(v)` 也是可以的
+
+    ```tsx
+      <input className={style.input} {...register('userName', {
+                        setValueAs: v => v === "" ? undefined : parseInt(v, 10) 
+                    })} placeholder='UserName' />
+    ```
+
+    但這樣的作法其實比較麻煩，還需要特地到 `tsx` 內調整，因此 Zod 還有提供了 `coerce` 的方法
+
+    它最主要的功能其實就是先轉型，因始就不需要在特地到 `tsx` 內轉型
+
+    ```ts
+    // 舊程式碼
+     const registerSchema = z.object({
+        userName: z.string().min(1),
+    });
+
+    // 新程式碼，完全不需要做太的異動
+    const registerSchema = z.object({
+            userName: z.coerce.number().min(1),
+        });
 
     ```
