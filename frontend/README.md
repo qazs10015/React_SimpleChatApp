@@ -141,7 +141,7 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
                     })} placeholder='UserName' />
     ```
 
-    但這樣的作法其實比較麻煩，還需要特地到 `tsx` 內調整，因此 Zod 還有提供了 `coerce` 的方法
+    但這樣的作法其實比較麻煩，還需要特地到 `tsx` 內調整，因此 `Zod` 還有提供了 `coerce` 的方法，[相關說明請點我](https://zod.dev/?id=coercion-for-primitives)
 
     它最主要的功能其實就是先轉型，因始就不需要在特地到 `tsx` 內轉型
 
@@ -151,7 +151,7 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
         userName: z.string().min(1),
     });
 
-    // 新程式碼，完全不需要做太的異動
+    // 新程式碼，不需要做太大的異動
     const registerSchema = z.object({
             userName: z.coerce.number().min(1),
         });
