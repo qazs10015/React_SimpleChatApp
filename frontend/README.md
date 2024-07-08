@@ -157,3 +157,26 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
         });
 
     ```
+- 如何做密碼驗證
+
+    密碼驗證是表單非常常見的功能，`Zod` 提供了 [`.refine`](https://zod.dev/?id=refine)，但直覺性的部分，感覺還是可以記錄一下
+
+    範例程式中，'refine' 的 'callback' 撰寫的是 `password === confirmPassword`，初次理解上會有點詭異
+
+    所以換個方式理解，**`自訂的規則是 password 必須等於 confirm，否則要顯示錯誤訊息`**，這樣比較好理解
+
+    ``` tsx
+    const registerSchema = z.object({
+    userName: z.coerce.string().min(1).regex(/^[a-zA-Z0-9_]+$/, '只能包含字母、數字和底線'),
+    email: z.string().email('無效的 email 格式'),
+    password: z.string().min(6, '密碼至少 6 位'),
+    confirmPassword: z.string().min(6, '密碼至少 6 位'),
+    }).refine((data) => data.password === data.confirmPassword, {
+        message: '密碼不一致',
+        path: ['confirmPassword'],
+    })
+    ```
+
+- 如何透過 Vite 使用環境變數
+
+    建立 `.env`，然後必須要以 `VITE` 為開頭的名稱，譬如 `VITE_API_URL`，透過 `import.meta.env.VITE_API_URL` 即可取得內容
