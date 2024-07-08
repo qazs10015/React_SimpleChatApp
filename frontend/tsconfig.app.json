@@ -22,6 +22,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
+
+    // "baseUrl": "./src",
+    // "paths": {
+    //   "@api/*": ["./src/api/*"]
+    // }
   },
-  "include": ["src"]
+  "include": ["src", "environment.d.ts"]
 }
