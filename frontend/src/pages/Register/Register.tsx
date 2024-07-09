@@ -38,7 +38,11 @@ function Register() {
             password: data.password,
         });
 
-        console.log(response);
+        if (response.data.status === false) alert(response.data.msg);
+        else {
+            alert('註冊成功');
+            sessionStorage.setItem('user', JSON.stringify(response.data.user));
+        }
 
     }
 
