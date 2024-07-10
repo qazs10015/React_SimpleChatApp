@@ -180,3 +180,16 @@ const submit = (e: React.FormEvent<HTMLFormElement>) => {
 - 如何透過 Vite 使用環境變數
 
     建立 `.env`，然後必須要以 `VITE` 為開頭的名稱，譬如 `VITE_API_URL`，透過 `import.meta.env.VITE_API_URL` 即可取得內容
+
+### MongoDB
+
+第一次使用 NoSQL 作為資料庫，學習過程是挺有趣了，比起以往使用 MSSQL 建立 DB 的時候要寫一堆 SQL Command 來的有趣
+
+搜尋資料也完全透過 JavaScript 就可以搞定了
+
+因為目前僅專注在前端開發，只是需要一個地方可以存資料，所以並沒有深入研究
+
+僅記錄安裝的三個建議軟體，[點我看哪三個](https://wei-docusaurus-vercel.vercel.app/docs/MongoDB/mongoose-1#mongodb-%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD%E6%9C%AC%E5%9C%B0%E7%AB%AF)
+
+
+參考的學習資源為 [[mongodb] MongoDB — Mongoose 介紹與使用教學 (上)](https://wei-docusaurus-vercel.vercel.app/docs/MongoDB/mongoose-1)、[[mongodb] MongoDB — Mongoose 介紹與使用教學 (下)](https://wei-docusaurus-vercel.vercel.app/docs/MongoDB/mongoose-2)
