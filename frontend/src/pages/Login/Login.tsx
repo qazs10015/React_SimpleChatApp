@@ -1,9 +1,20 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import style from './Login.module.scss';
 import { AxiosInstance } from "../../api/baseUrl";
+import style from './Login.module.scss';
+
+// fix circular json error
+// const formatErrors = (errors: Record<string, FieldError>): object => {
+//     if (Object.keys(errors).length === 0) return {};
+//     return Object.keys(errors).map(key => {
+//         return {
+//             [key]: { message: errors[key].message, type: errors[key].type }
+//         }
+//     })
+// };
 
 const loginSchema = z.object({
     userName: z.coerce.string().min(1).regex(/^[a-zA-Z0-9_]+$/, '只能包含字母、數字和底線'),
@@ -34,15 +45,15 @@ function Login() {
 
     return (
         <>
-            {/* {errors.userName && JSON.stringify(errors.userName)} */}
             <div className="flex flex-col justify-center items-center  gap-3 ">
+                {/* <pre>{JSON.stringify(formatErrors(errors))}</pre> */}
                 <p className='text-white'>🚀 <strong>Create New Account</strong></p>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-col justify-center  bg-opacity-80 bg-black rounded-3xl p-10 min-w-[430px]">
                     <input className={style.input} {...register('userName')} placeholder='UserName' />
-                    <div className={style.errorMsg}>{errors.userName && errors.userName.message}</div>
+                    <div className={style.errorMsg}> <ErrorMessage errors={errors} name="userName" /></div>
 
                     <input type="password" className={style.input} {...register('password')} name='password' placeholder='Password' />
-                    <div className={style.errorMsg}>{errors.password && errors.password.message}</div>
+                    <div className={style.errorMsg}> <ErrorMessage errors={errors} name="password" /></div>
 
                     <div className='text-center mt-5'>
                         <button type="submit" className='p-2 rounded-md bg-primary text-white w-full hover:bg-[#4f58ff] transition ease-in-out duration-700'>Login</button>

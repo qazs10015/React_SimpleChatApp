@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import style from './Register.module.scss';
 import { AxiosInstance } from '../../api/baseUrl';
+import { ErrorMessage } from '@hookform/error-message';
 
 const registerSchema = z.object({
     userName: z.coerce.string().min(1).regex(/^[a-zA-Z0-9_]+$/, '只能包含字母、數字和底線'),
@@ -52,16 +53,16 @@ function Register() {
                 <p className='text-white'>🚀 <strong>Welcome to Chat App</strong></p>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-col justify-center  bg-opacity-80 bg-black rounded-3xl p-10 min-w-[440px]">
                     <input className={style.input} {...register('userName')} placeholder='UserName' />
-                    <div className={style.errorMsg}>{errors.userName && errors.userName.message}</div>
+                    <div className={style.errorMsg}> <ErrorMessage errors={errors} name="userName" /></div>
 
                     <input className={style.input} {...register('email')} placeholder='Email' />
-                    <div className={style.errorMsg}>{errors.email && errors.email.message}</div>
+                    <div className={style.errorMsg}> <ErrorMessage errors={errors} name="email" /></div>
 
                     <input type='password' className={style.input} {...register('password')} placeholder='Password' />
-                    <div className={style.errorMsg}>{errors.password && errors.password.message}</div>
+                    <div className={style.errorMsg}> <ErrorMessage errors={errors} name="password" /></div>
 
                     <input type='password' className={style.input} {...register('confirmPassword')} placeholder='Confirm Password' />
-                    <div className={style.errorMsg}>{errors.confirmPassword && errors.confirmPassword.message}</div>
+                    <div className={style.errorMsg}> <ErrorMessage errors={errors} name="confirmPassword" /></div>
 
                     <div className='text-center mt-5'>
                         <button type="submit" className='p-2 rounded-md bg-primary text-white w-full hover:bg-[#4f58ff] transition ease-in-out duration-700'>Create Account</button>
