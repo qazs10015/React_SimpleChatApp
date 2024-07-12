@@ -39,7 +39,7 @@ function Login() {
         else {
             alert('登入成功');
             sessionStorage.setItem('user', JSON.stringify(response.data.user));
-            redirect('/home');
+            redirect('/setAvatar');
         }
     }
 
