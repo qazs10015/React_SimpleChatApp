@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { AxiosInstance } from "../../api/baseUrl";
 import style from './Login.module.scss';
+import { useDispatch } from "react-redux";
+import { setUser } from "../../slices/userSlice";
 
 // fix circular json error
 // const formatErrors = (errors: Record<string, FieldError>): object => {
@@ -31,14 +33,16 @@ const defaultValues: LoginProps = {
 function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginProps>({ defaultValues, resolver: zodResolver(loginSchema) });
     const redirect = useNavigate();
+    const dispatch = useDispatch();
+
     const submit: SubmitHandler<LoginProps> = async (data) => {
 
+        console.log(data);
         const response = await AxiosInstance.post('/auth/login', data);
-        console.log(response);
         if (!response.data.status) alert(response.data.msg);
         else {
             alert('登入成功');
-            sessionStorage.setItem('user', JSON.stringify(response.data.user));
+            dispatch(setUser(response.data.user));
             redirect('/setAvatar');
         }
     }

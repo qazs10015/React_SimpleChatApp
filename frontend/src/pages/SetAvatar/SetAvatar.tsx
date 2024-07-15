@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AxiosInstance } from '../../api/baseUrl';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { setUser } from '../../slices/userSlice';
 
 // free API for random avatar
 const avatarAPI = 'https://api.multiavatar.com/45678945';
@@ -7,7 +10,7 @@ const avatarAPI = 'https://api.multiavatar.com/45678945';
 async function avatarPromise() {
     const promises = [];
     for (let index = 0; index < 4; index++) {
-        promises.push(AxiosInstance.get(`${avatarAPI}/${Math.round(Math.random() * 1000)}`))
+        promises.push(AxiosInstance.get(`${avatarAPI}/${Math.round(Math.random() * 1000)}`));
     }
 
     return await Promise.all(promises);
@@ -15,20 +18,42 @@ async function avatarPromise() {
 
 function SetAvatar() {
 
-    const [avatarList, setAvatarList] = useState<string[]>([])
+    const [avatarList, setAvatarList] = useState<string[]>([]);
 
     const [avatar, setAvatar] = useState<string>('');
 
+    const userInfo = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
 
-    const refresh = async () => {
-        setAvatarList((await avatarPromise()).map(res => res.data));
-    }
+    console.log(userInfo);
+
+    const refresh = async () => setAvatarList((await avatarPromise()).map(res => res.data));
 
     useEffect(() => {
         refresh();
     }, []);
 
     const pickAvatar = (avatar: string) => setAvatar(avatar);
+
+    const setProfileAvatar = async () => {
+        if (!avatar) alert('請選擇喜愛的頭像');
+
+        const user = { ...userInfo, avatarImage: avatar, isAvatarImageSet: true };
+
+        // 移除不需要的欄位
+        if ('_id' in user) delete user._id;
+        if ('__v' in user) delete user.__v;
+
+        dispatch(setUser(user));
+        console.log(user);
+        const response = await AxiosInstance.post('/user/update', user);
+        if (response.data.status) {
+            const { msg, user } = response.data;
+            alert(msg);
+            dispatch(setUser(user));
+        }
+
+    };
 
     return (
         <>
@@ -44,7 +69,7 @@ function SetAvatar() {
                 </div>
                 <div className='flex gap-4'>
                     <button className='p-2 w-[5rem] rounded-md bg-white text-primary hover:bg-secondary hover:text-white transition ease-in-out duration-700' onClick={() => refresh()}>Refresh</button>
-                    <button className='p-2 w-[5rem] rounded-md bg-primary text-white hover:bg-secondary hover:text-white transition ease-in-out duration-700' onClick={() => refresh()}>Pick it!</button>
+                    <button className='p-2 w-[5rem] rounded-md bg-primary text-white hover:bg-secondary hover:text-white transition ease-in-out duration-700' onClick={() => setProfileAvatar()}>Pick it!</button>
                 </div>
             </div>
 

@@ -18,7 +18,6 @@ const registerSchema = z.object({
 
 type RegisterProps = z.infer<typeof registerSchema>;
 
-
 const defaultValues: RegisterProps = {
     userName: '',
     email: '',
