@@ -52,6 +52,9 @@ module.exports.login = async (req, res, next) => {
 
         const userObj = user.toObject();
 
+        // 刪除前端不必要的欄位
+        if ('__v' in userObj) delete userObj.__v;
+
         delete userObj.password;
 
         return res.json({ msg: '登入成功', status: true, user: userObj });

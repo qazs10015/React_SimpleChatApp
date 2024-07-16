@@ -10,15 +10,29 @@ module.exports.update = async (req, res, next) => {
         const { userName, isAvatarImageSet, avatarImage } = req.body;
 
         const user = await User.findOne({ userName });
+
         if (!user) return res.json({ msg: '使用者資料有誤', status: false });
 
         const updatedUser = await User.findOneAndUpdate(
-            { userName },
-            { $set: req.body },
+            user._id,
+            req.body,
             { new: true }
         );
 
         return res.json({ msg: '使用者資料更新成功', status: true, user: updatedUser });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports.getAllUsers = async (req, res, next) => {
+    try {
+        const { userName } = req.body;
+
+        const users = (await User.find({ userName: { $ne: userName } }));
+
+        return res.json({ msg: '使用者資料更新成功', status: true, users });
 
     } catch (error) {
         next(error);
