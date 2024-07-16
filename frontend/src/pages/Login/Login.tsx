@@ -37,13 +37,13 @@ function Login() {
 
     const submit: SubmitHandler<LoginProps> = async (data) => {
 
-        console.log(data);
         const response = await AxiosInstance.post('/auth/login', data);
         if (!response.data.status) alert(response.data.msg);
         else {
             alert('登入成功');
             dispatch(setUser(response.data.user));
-            redirect('/setAvatar');
+            if (response.data.user.isAvatarImageSet) redirect('/chat');
+            else redirect('/setAvatar');
         }
     }
 

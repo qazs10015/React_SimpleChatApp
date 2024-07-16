@@ -6,23 +6,22 @@ import SetAvatar from "./pages/SetAvatar/SetAvatar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { setUser } from "./slices/userSlice";
+import ChatView from "./pages/ChatView/ChatView";
 
 // check login status
-function AuthenticatedRoute({ children }: { children: React.ReactNode }) {
+function AuthenticatedRoute() {
   const userInfo = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   // determine if user is logged in or not by checking if userInfo is empty
-  const isAuth = Object.keys(userInfo).length > 0 || sessionStorage.getItem('user');
+  const isAuth = !!userInfo.userName || !!sessionStorage.getItem('user');
 
-  if (Object.keys(userInfo).length === 0 && sessionStorage.getItem('user')) {
-    dispatch(setUser(JSON.parse(sessionStorage.getItem('user') as string)));
-  }
+  if (!userInfo.userName) dispatch(setUser(JSON.parse(sessionStorage.getItem('user')!)));
 
   if (!isAuth) alert('請先登入');
   return (
     <div>
-      {isAuth ? children : <Navigate to="/login" />}
+      {isAuth ? <Home /> : <Navigate to="/login" />}
     </div>
   );
 
@@ -65,12 +64,17 @@ const routes = [
   {
     path: '/',
     loader: async () => document.title = 'Home',
-    element: <AuthenticatedRoute><Home /></AuthenticatedRoute>,
+    element: <AuthenticatedRoute />,
     children: [
       {
         path: 'setAvatar',
         loader: async () => document.title = 'Select Avatar',
         element: <SetAvatar />,
+      },
+      {
+        path: 'chat',
+        loader: async () => document.title = 'Start Chat',
+        element: <ChatView />,
       },
     ]
   },

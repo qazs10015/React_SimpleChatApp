@@ -3,6 +3,7 @@ import { AxiosInstance } from '../../api/baseUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setUser } from '../../slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 // free API for random avatar
 const avatarAPI = 'https://api.multiavatar.com/45678945';
@@ -19,6 +20,7 @@ async function avatarPromise() {
 function SetAvatar() {
 
     const [avatarList, setAvatarList] = useState<string[]>([]);
+    const redirect = useNavigate();
 
     const [avatar, setAvatar] = useState<string>('');
 
@@ -30,8 +32,9 @@ function SetAvatar() {
     const refresh = async () => setAvatarList((await avatarPromise()).map(res => res.data));
 
     useEffect(() => {
-        refresh();
-    }, []);
+        if (userInfo.isAvatarImageSet) redirect('/chat');
+        else refresh();
+    }, [redirect, userInfo.isAvatarImageSet]);
 
     const pickAvatar = (avatar: string) => setAvatar(avatar);
 
@@ -40,10 +43,6 @@ function SetAvatar() {
 
         const user = { ...userInfo, avatarImage: avatar, isAvatarImageSet: true };
 
-        // 移除不需要的欄位
-        if ('_id' in user) delete user._id;
-        if ('__v' in user) delete user.__v;
-
         dispatch(setUser(user));
         console.log(user);
         const response = await AxiosInstance.post('/user/update', user);
@@ -51,6 +50,7 @@ function SetAvatar() {
             const { msg, user } = response.data;
             alert(msg);
             dispatch(setUser(user));
+            redirect('/chat');
         }
 
     };
