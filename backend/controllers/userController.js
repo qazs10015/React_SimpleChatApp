@@ -32,7 +32,7 @@ module.exports.getAllUsers = async (req, res, next) => {
 
         const users = (await User.find({ userName: { $ne: userName } }));
 
-        return res.json({ msg: '使用者資料更新成功', status: true, users });
+        return res.json({ msg: '已取得所有使用者資料', status: true, users });
 
     } catch (error) {
         next(error);

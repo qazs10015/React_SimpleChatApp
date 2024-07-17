@@ -30,11 +30,7 @@ module.exports.register = async (req, res, next) => {
 
         User.create(user);
 
-        const userObj = user.toObject();
-
-        delete userObj.password;
-
-        return res.json({ msg: 'User registered successfully', status: true, user: userObj });
+        return res.json({ msg: 'User registered successfully', status: true });
     } catch (error) {
         next(error);
     }
