@@ -51,7 +51,7 @@ function Login() {
         <>
             <div className="flex flex-col justify-center items-center  gap-3 ">
                 {/* <pre>{JSON.stringify(formatErrors(errors))}</pre> */}
-                <p className='text-white'>🚀 <strong>Create New Account</strong></p>
+                <p className='text-white'>🚀 <strong>Welcome to Chat App</strong></p>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-col justify-center  bg-opacity-80 bg-black rounded-3xl p-10 min-w-[430px]">
                     <input className={style.input} {...register('userName')} placeholder='UserName' />
                     <div className={style.errorMsg}> <ErrorMessage errors={errors} name="userName" /></div>

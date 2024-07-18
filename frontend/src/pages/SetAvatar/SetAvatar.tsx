@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { setUser } from '../../slices/userSlice';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '../../components/Avatar';
 
 // free API for random avatar
 const avatarAPI = 'https://api.multiavatar.com/45678945';
@@ -40,18 +41,20 @@ function SetAvatar() {
 
     const setProfileAvatar = async () => {
         if (!avatar) alert('請選擇喜愛的頭像');
+        else {
+            const user = { ...userInfo, avatarImage: avatar, isAvatarImageSet: true };
 
-        const user = { ...userInfo, avatarImage: avatar, isAvatarImageSet: true };
-
-        dispatch(setUser(user));
-        console.log(user);
-        const response = await AxiosInstance.post('/user/update', user);
-        if (response.data.status) {
-            const { msg, user } = response.data;
-            alert(msg);
             dispatch(setUser(user));
-            redirect('/chat');
+            console.log(user);
+            const response = await AxiosInstance.post('/user/update', user);
+            if (response.data.status) {
+                const { msg, user } = response.data;
+                alert(msg);
+                dispatch(setUser(user));
+                redirect('/chat');
+            }
         }
+
 
     };
 
@@ -63,7 +66,9 @@ function SetAvatar() {
                     {avatarList.map((item, index) => {
                         // encode svg info to base64 and show it
                         return (
-                            <img className={`w-[120px] h-[120px] rounded-full cursor-pointer p-1 border-4 border-transparent hover:border-yellow-400 duration-700 ease-out ${avatar === btoa(item) && 'border-yellow-400'}`} key={index} src={`data:image/svg+xml;base64,${btoa(item)}`} onClick={() => pickAvatar(btoa(item))}></img>
+                            <div className={`rounded-full cursor-pointer p-1 border-4 border-transparent hover:border-yellow-400 duration-700 ease-out`}>
+                                <Avatar currentAvatar={avatar} avatarBlob={item} key={index} pickAvatar={pickAvatar} ></Avatar>
+                            </div>
                         )
                     })}
                 </div>

@@ -13,15 +13,15 @@ function AuthenticatedRoute() {
   const userInfo = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  // determine if user is logged in or not by checking if userInfo is empty
+  // checking user is logged in or not 
   const isAuth = !!userInfo.userName || !!sessionStorage.getItem('user');
 
-  if (!userInfo.userName) dispatch(setUser(JSON.parse(sessionStorage.getItem('user')!)));
+  if (!userInfo.userName && isAuth) dispatch(setUser(JSON.parse(sessionStorage.getItem('user')!)));
 
   if (!isAuth) alert('請先登入');
   return (
     <div>
-      {isAuth ? <Home /> : <Navigate to="/login" />}
+      {isAuth ? <Home /> : <Login />}
     </div>
   );
 
@@ -33,16 +33,13 @@ function ErrorPage() {
   console.log(error);
   // throw error;
   // 透過 isRouteErrorResponse 判斷錯誤訊息來源是不是來自 Router，如果不是就交給外層的 ErrorBoundary 處理
-  if (!isRouteErrorResponse(error)) {
-    console.log('這不是 route error');
-    throw error;
-  }
+  if (!isRouteErrorResponse(error)) throw error;
 
   return (
     <div id="error-page">
       <h1 className="text-error">Router Error</h1>
       <p className="text-info">
-        {error?.error.message}
+        {error?.message}
       </p>
     </div>
   );
