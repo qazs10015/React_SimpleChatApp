@@ -7,21 +7,21 @@ import Avatar from './Avatar';
 
 function UserInfo({ isAvatarImageSet, avatarImage, userName }: Omit<IUser, '_id' | 'email'>) {
     return <>
-        <div className='flex justify-start items-center rounded-lg gap-2 '>
-            {isAvatarImageSet && <div className='w-[5vw]'> <Avatar avatarBlob={avatarImage}></Avatar></div>}
-            < div > {userName}</div >
+        <div className='flex justify-start items-center gap-2 h-[8vh]'>
+            {isAvatarImageSet && <Avatar width={70} avatarBlob={avatarImage}></Avatar>}
+            <div> {userName}</div >
         </div>
     </>
 }
 
 function Contact() {
     const [userList, setUserList] = useState<IUser[]>([]);
-    const user = useSelector((state: RootState) => state.user);
+    const currentUser = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
         function getAllUsers() {
             // fetch all users
-            AxiosInstance.post('/user/getAllUsers', user).then(res => {
+            AxiosInstance.post('/user/getAllUsers', currentUser).then(res => {
                 console.log(res);
                 setUserList(res.data.users);
             });
@@ -29,13 +29,19 @@ function Contact() {
 
         getAllUsers();
 
-    }, [user])
+    }, [currentUser])
 
     return (
-        <section className='bg-secondary text-white rounded-l-lg p-3 w-[14vw] flex flex-col justify-between items-start'>
-            {/* overflow */}
-            <div>{userList.map(user => <UserInfo key={user._id} {...user} ></UserInfo>)}</div>
-            <UserInfo {...user}></UserInfo>
+        <section className='bg-purple-950 text-sm text-white rounded-l-lg  w-[200px] flex flex-col justify-between items-start'>
+            {/* chat list */}
+            <div className='overflow-y-auto h-[500px] w-full py-2 pl-2' >{
+                userList.map(user =>
+                    // hover effect
+                    <div key={user._id} className='hover:bg-gradient-to-tr from-secondary rounded-lg cursor-pointer p-2'>
+                        <UserInfo {...user} ></UserInfo>
+                    </div>)
+            }</div>
+            <div className='bg-blue-950 rounded-l-lg w-full p-2 flex justify-center'><UserInfo {...currentUser}></UserInfo></div>
         </section>
     )
 }

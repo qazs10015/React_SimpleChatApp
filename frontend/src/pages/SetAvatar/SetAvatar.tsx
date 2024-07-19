@@ -66,8 +66,8 @@ function SetAvatar() {
                     {avatarList.map((item, index) => {
                         // encode svg info to base64 and show it
                         return (
-                            <div className={`rounded-full cursor-pointer p-1 border-4 border-transparent hover:border-yellow-400 duration-700 ease-out`}>
-                                <Avatar currentAvatar={avatar} avatarBlob={item} key={index} pickAvatar={pickAvatar} ></Avatar>
+                            <div key={index} className={`rounded-full cursor-pointer p-1 border-4 border-transparent hover:border-yellow-400 duration-700 ease-out ${avatar === item && 'border-yellow-400'} `}>
+                                <Avatar avatarBlob={item} pickAvatar={pickAvatar} ></Avatar>
                             </div>
                         )
                     })}
