@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AxiosInstance } from '../api/baseUrl';
 import { IUser } from '../models/user.model';
@@ -14,9 +14,15 @@ function UserInfo({ isAvatarImageSet, avatarImage, userName }: Omit<IUser, '_id'
     </>
 }
 
-function Contact() {
+type ContactProps = {
+    setSelectedUser: (user: string) => void,
+    selectedUser: string
+
+}
+function Contact({ setSelectedUser, selectedUser }: ContactProps) {
     const [userList, setUserList] = useState<IUser[]>([]);
     const currentUser = useSelector((state: RootState) => state.user);
+
 
     useEffect(() => {
         function getAllUsers() {
@@ -37,7 +43,7 @@ function Contact() {
             <div className='overflow-y-auto h-[500px] w-full py-2 pl-2' >{
                 userList.map(user =>
                     // hover effect
-                    <div key={user._id} className='hover:bg-gradient-to-tr from-secondary rounded-lg cursor-pointer p-2'>
+                    <div key={user._id} className={`hover:bg-gradient-to-tr from-secondary rounded-lg cursor-pointer p-2 ${selectedUser === user.userName && 'bg-gradient-to-tr from-secondary'}`} onClick={() => setSelectedUser(user.userName)}>
                         <UserInfo {...user} ></UserInfo>
                     </div>)
             }</div>
@@ -46,4 +52,5 @@ function Contact() {
     )
 }
 
-export default Contact
+
+export default React.forwardRef(Contact)
