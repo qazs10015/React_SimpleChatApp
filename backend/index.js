@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 const app = express();
 require('dotenv').config();
@@ -15,8 +16,9 @@ app.use(express.json());
 //     console.info(req.body); 
 //     res.send('Registration endpoint hit');
 // };
-app.use('/api/user', userRoutes)
+app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/message', messageRoutes);
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
