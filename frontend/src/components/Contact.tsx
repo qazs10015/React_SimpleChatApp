@@ -18,10 +18,7 @@ function Contact({ setChatTarget, chatTarget }: ContactProps) {
     useEffect(() => {
         function getAllUsers() {
             // fetch all users
-            AxiosInstance.post('/user/getAllUsers', currentUser).then(res => {
-                console.log(res);
-                setUserList(res.data.users);
-            });
+            AxiosInstance.post('/user/getAllUsers', currentUser).then(res => setUserList(res.data.users));
         }
 
         getAllUsers();
