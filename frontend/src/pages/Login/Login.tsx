@@ -6,7 +6,8 @@ import { z } from "zod";
 import { AxiosInstance } from "../../api/baseUrl";
 import style from './Login.module.scss';
 import { useDispatch } from "react-redux";
-import { setUser } from "../../slices/userSlice";
+import { setUser, userLogout } from "../../slices/userSlice";
+import { useEffect } from "react";
 
 // fix circular json error
 // const formatErrors = (errors: Record<string, FieldError>): object => {
@@ -46,6 +47,11 @@ function Login() {
             else redirect('/setAvatar');
         }
     }
+
+    useEffect(() => {
+        // remove user info when enter login page
+        dispatch(userLogout());
+    }, [dispatch])
 
     return (
         <>

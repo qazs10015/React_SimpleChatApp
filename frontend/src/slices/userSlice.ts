@@ -5,6 +5,7 @@ const initialState = {
   email: '',
   isAvatarImageSet: false,
   avatarImage: '',
+  _id: '',
 };
 
 export const userSlice = createSlice({
@@ -16,9 +17,13 @@ export const userSlice = createSlice({
       sessionStorage.setItem('user', JSON.stringify(action.payload));
       return { ...state, ...action.payload };
     },
+    userLogout() {
+      sessionStorage.removeItem('user');
+      return { ...initialState };
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, userLogout } = userSlice.actions;
 
 export default userSlice.reducer;
