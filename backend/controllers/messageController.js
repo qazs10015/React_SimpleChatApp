@@ -20,19 +20,20 @@ module.exports.addMessage = async (req, res, next) => {
 
 module.exports.getAllMessage = async (req, res, next) => {
     try {
-        // const { userName, isAvatarImageSet, avatarImage } = req.body;
+        const { from, to } = req.body;
 
-        // const user = await User.findOne({ userName });
+        const messages = await messageModel.find({
+            users: { $all: [from, to] }
+        }).sort({ updatedAt: 1 });
 
-        // if (!user) return res.json({ msg: '使用者資料有誤', status: false });
-
-        // const updatedUser = await User.findOneAndUpdate(
-        //     user._id,
-        //     req.body,
-        //     { new: true }
-        // );
-
-        // return res.json({ msg: '使用者資料更新成功', status: true, user: updatedUser });
+        const projectMessages = messages.map(msg => {
+            return {
+                fromSelf: msg.sender.toString() === from,
+                message: msg.message.text,
+            }
+        });
+        
+        return res.json({ msg: '取得訊息成功', status: true, messages: projectMessages });;
 
     } catch (error) {
         next(error);
