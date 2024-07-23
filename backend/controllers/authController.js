@@ -26,8 +26,6 @@ module.exports.register = async (req, res, next) => {
             password: hashedPassword,
         };
 
-        console.log(user);
-
         User.create(user);
 
         return res.json({ msg: 'User registered successfully', status: true });

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 import { IMessage } from '../models/message.model';
 
 interface ContextValue {
@@ -12,7 +12,7 @@ const context = createContext<ContextValue>({
     sendMsg: '',
     setSendMsg: (): void => { },
     messageList: [],
-    setMessageList: (): void => { }
+    setMessageList: (): void => { },
 });
 
 export const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -20,7 +20,15 @@ export const ChatContextProvider = ({ children }: { children: React.ReactNode })
     const [sendMsg, setSendMsg] = useState('')
     const [messageList, setMessageList] = useState<IMessage[]>([]);
 
-    return <context.Provider value={{ sendMsg, setSendMsg, messageList, setMessageList }}>{children}</context.Provider>
+
+    const contextValue = useMemo(() => ({
+        sendMsg,
+        setSendMsg,
+        messageList,
+        setMessageList,
+    }), [messageList, sendMsg]);
+
+    return <context.Provider value={contextValue}>{children}</context.Provider>
 }
 
 // 自定義 hook

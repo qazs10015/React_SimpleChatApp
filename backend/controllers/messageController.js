@@ -3,7 +3,6 @@ const messageModel = require('../models/messageModel');
 module.exports.addMessage = async (req, res, next) => {
     try {
         const { from, to, message } = req.body;
-        console.log(req.body);
         const data = await messageModel.create({
             message: { text: message },
             users: [from, to],
@@ -32,7 +31,7 @@ module.exports.getAllMessage = async (req, res, next) => {
                 message: msg.message.text,
             }
         });
-        
+
         return res.json({ msg: '取得訊息成功', status: true, messages: projectMessages });;
 
     } catch (error) {
