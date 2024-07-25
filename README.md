@@ -16,6 +16,7 @@ Practice how to implement ChatApp, here is [reference video](https://www.youtube
 - [React Router](https://reactrouter.com/en/main)
 - [Zod](https://zod.dev/)
 - [React Hook Form](https://react-hook-form.com/)
+- [TailwindCSS](https://tailwindcss.com/)
 
 ## Installation Guide
 
