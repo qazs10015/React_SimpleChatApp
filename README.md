@@ -50,7 +50,7 @@ Open `localhost:3000` in your browser to see ChatApp and `localhost:5000` is bac
 - test5/123456
 - test6/123456
 
-### There are some screenshots in ChatApp
+### There are some screenshots for ChatApp
 
 ![login.png](./images/login.png)
 ![register.png](./images/register.png)
