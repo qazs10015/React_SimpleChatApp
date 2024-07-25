@@ -26,6 +26,7 @@ This project is divided into 2 project, frontend and backend
 ```shell
 cd frontend
 npm install
+npm start
 ```
 
 
@@ -34,6 +35,7 @@ npm install
 ```shell
 cd frontend
 npm install
+npm start
 ```
 
 Open `localhost:3000` in your browser to see ChatApp and `localhost:5000` is backend host
