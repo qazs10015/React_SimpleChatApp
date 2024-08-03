@@ -29,11 +29,12 @@ app.get('/api/test', (req, res) => {
 
 
 
-mongoose.connect(process.env.MONGO_URL).then(() => {
-    console.info('DB connected');
-}).catch(err => {
-    console.error(err.message);
-});
+mongoose.connect(process.env.MONGODB_URI
+    || process.env.MONGO_URL).then(() => {
+        console.info('DB connected');
+    }).catch(err => {
+        console.error(err.message);
+    });
 
 const server = app.listen(port, () => {
     console.log(`Server started on port ${process.env.PORT}`);
