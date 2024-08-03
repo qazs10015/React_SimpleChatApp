@@ -1,12 +1,12 @@
-import { createBrowserRouter, isRouteErrorResponse, Navigate, useRouteError } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createBrowserRouter, isRouteErrorResponse, useRouteError } from "react-router-dom";
+import ChatView from "./pages/ChatView/ChatView";
 import Home from "./pages/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import SetAvatar from "./pages/SetAvatar/SetAvatar";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store";
 import { setUser } from "./slices/userSlice";
-import ChatView from "./pages/ChatView/ChatView";
+import { RootState } from "./store";
 
 // check login status
 function AuthenticatedRoute() {

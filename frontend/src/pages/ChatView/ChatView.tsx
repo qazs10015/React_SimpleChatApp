@@ -1,4 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { io, Socket } from 'socket.io-client';
 import ChatContent from '../../components/ChatContent';
 import ChatInput from '../../components/ChatInput';
 import ChatTargetInfo from '../../components/ChatTargetInfo';
@@ -6,8 +8,6 @@ import Contact from '../../components/Contact';
 import WelcomeToChat from '../../components/WelcomeToChat';
 import { ChatContextProvider, useChatContext } from '../../context/ChatContext';
 import { IUser } from '../../models/user.model';
-import { io, Socket } from 'socket.io-client';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
 

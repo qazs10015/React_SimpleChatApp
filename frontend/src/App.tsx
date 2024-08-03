@@ -6,7 +6,7 @@ import { store } from './store'
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function fallbackRender({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) {
+function fallbackRender({ error }: { error: Error }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
 
   console.log('fromErrorBoundary', error);
