@@ -20,6 +20,9 @@ app.use(express.json());
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/message', messageRoutes);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -33,6 +36,7 @@ mongoose.connect(process.env.MONGO_URL, {
 const server = app.listen(process.env.PORT, () => {
     console.log(`Server started on port ${process.env.PORT}`);
 })
+
 
 const io = socket(server, {
     cors: {
