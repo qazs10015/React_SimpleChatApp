@@ -11,7 +11,7 @@ module.exports.getCurrentUser = async (req, res, next) => {
 
         const user = await User.findOne({ userName });
 
-        if (!user) return res.json({ msg: '使用者資料有誤', status: false });
+        if (!user) return res.json({ msg: `使用者資料有誤, 找不到 ${userName}`, status: false });
 
         const newUser = user.toObject();
 
