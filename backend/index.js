@@ -8,10 +8,19 @@ const socket = require('socket.io');
 
 
 const app = express();
+
+
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+const corsOptions = {
+    origin: 'https://react-simple-chat-678aoz5bg-qazs10015s-projects.vercel.app',
+    methods: 'GET, POST, PUT, DELETE, PATCH',
+    allowedHeaders: 'Content-Type, Authorization'
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // module.exports.register = (req, res) => {
@@ -43,7 +52,14 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: (origin, callback) => {
+            const whitelist = ['http://localhost:3000', 'https://react-simple-chat-app-six.vercel.app'];
+            if (whitelist.indexOf(origin) !== -1 || !origin) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
 
     }
 });
