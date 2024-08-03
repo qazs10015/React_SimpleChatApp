@@ -5,6 +5,21 @@ const defaultUser = {
     email: 'admin@hotmail.com'
 }
 
+module.exports.getCurrentUser = async (req, res, next) => {
+    try {
+        const { userName } = req.body;
+
+        const user = await User.findOne({ userName });
+
+        if (!user) return res.json({ msg: '使用者資料有誤', status: false });
+
+        return res.json(user);
+    }
+    catch (error) {
+
+    }
+}
+
 module.exports.update = async (req, res, next) => {
     try {
         const { userName, isAvatarImageSet, avatarImage } = req.body;
