@@ -1,7 +1,7 @@
 # ChatApp
 Practice how to implement ChatApp, here is [reference video](https://www.youtube.com/watch?v=otaQKODEUFs)
 
-[Demo](https://react-simple-chat-app-six.vercel.app/login)
+[Demo](https://react-simple-chat-app-six.vercel.app/)
 
 ## All features ChatApp has
 
