@@ -6,8 +6,10 @@ const authRoutes = require('./routes/authRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const socket = require('socket.io');
 
+
 const app = express();
 require('dotenv').config();
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -24,10 +26,10 @@ app.get('/api/test', (req, res) => {
     res.send('Hello World!');
 });
 
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
+
+
+
+mongoose.connect(process.env.MONGO_URL).then(() => {
     console.info('DB connected');
 }).catch(err => {
     console.error(err.message);
@@ -38,26 +40,26 @@ const server = app.listen(process.env.PORT, () => {
 })
 
 
-const io = socket(server, {
-    cors: {
-        origin: 'http://localhost:3000',
+// const io = socket(server, {
+//     cors: {
+//         origin: 'http://localhost:3000',
 
-    }
-});
+//     }
+// });
 
-global.onlineUsers = new Map();
-io.on("connection", (socket) => {
-    global.chatSocket = socket;
-    socket.on("addUser", (userId) => {
-        onlineUsers.set(userId, socket.id);
-    });
+// global.onlineUsers = new Map();
+// io.on("connection", (socket) => {
+//     global.chatSocket = socket;
+//     socket.on("addUser", (userId) => {
+//         onlineUsers.set(userId, socket.id);
+//     });
 
-    socket.on("sendMsg", (data) => {
-        console.log('sendMsg', data);
-        const sendUserSocket = onlineUsers.get(data.to);
-        console.log('to', sendUserSocket);
-        if (sendUserSocket) {
-            io.to(sendUserSocket).emit("receiveMsg", data);
-        }
-    });
-});
+//     socket.on("sendMsg", (data) => {
+//         console.log('sendMsg', data);
+//         const sendUserSocket = onlineUsers.get(data.to);
+//         console.log('to', sendUserSocket);
+//         if (sendUserSocket) {
+//             io.to(sendUserSocket).emit("receiveMsg", data);
+//         }
+//     });
+// });
