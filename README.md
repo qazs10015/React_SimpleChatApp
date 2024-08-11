@@ -3,6 +3,15 @@ Practice how to implement ChatApp, here is [reference video](https://www.youtube
 
 [Demo](https://react-simple-chat-app-six.vercel.app/)
 
+There are available accounts has already register
+
+- test1/123456
+- test2/123456
+- test3/123456
+- test4/123456
+- test5/123456
+- test6/123456
+
 ## All features ChatApp has
 
 - Login
@@ -42,16 +51,6 @@ npm start
 ```
 
 Open `localhost:3000` in your browser to see ChatApp and `localhost:5000` is backend host
-
-
-### There are available accounts has already register
-
-- test1/123456
-- test2/123456
-- test3/123456
-- test4/123456
-- test5/123456
-- test6/123456
 
 ### There are some screenshots for ChatApp
 
